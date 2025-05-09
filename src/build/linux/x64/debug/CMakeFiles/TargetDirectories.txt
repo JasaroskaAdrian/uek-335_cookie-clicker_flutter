@@ -11,7 +11,7 @@
 /home/adi/Git/uek-335_cookie-clicker_flutter/src/build/linux/x64/debug/flutter/CMakeFiles/install.dir
 /home/adi/Git/uek-335_cookie-clicker_flutter/src/build/linux/x64/debug/flutter/CMakeFiles/install/local.dir
 /home/adi/Git/uek-335_cookie-clicker_flutter/src/build/linux/x64/debug/flutter/CMakeFiles/install/strip.dir
-/home/adi/Git/uek-335_cookie-clicker_flutter/src/build/linux/x64/debug/runner/CMakeFiles/flutter_application_1.dir
+/home/adi/Git/uek-335_cookie-clicker_flutter/src/build/linux/x64/debug/runner/CMakeFiles/ChronoCookie.dir
 /home/adi/Git/uek-335_cookie-clicker_flutter/src/build/linux/x64/debug/runner/CMakeFiles/edit_cache.dir
 /home/adi/Git/uek-335_cookie-clicker_flutter/src/build/linux/x64/debug/runner/CMakeFiles/rebuild_cache.dir
 /home/adi/Git/uek-335_cookie-clicker_flutter/src/build/linux/x64/debug/runner/CMakeFiles/list_install_components.dir

@@ -1,4 +1,4 @@
-/home/adi/Git/uek-335_cookie-clicker_flutter/src/build/linux/x64/debug/bundle/flutter_application_1
+/home/adi/Git/uek-335_cookie-clicker_flutter/src/build/linux/x64/debug/bundle/ChronoCookie
 /home/adi/Git/uek-335_cookie-clicker_flutter/src/build/linux/x64/debug/bundle/data/icudtl.dat
 /home/adi/Git/uek-335_cookie-clicker_flutter/src/build/linux/x64/debug/bundle/lib/libflutter_linux_gtk.so
 /home/adi/Git/uek-335_cookie-clicker_flutter/src/build/linux/x64/debug/bundle/data/flutter_assets/NativeAssetsManifest.json
