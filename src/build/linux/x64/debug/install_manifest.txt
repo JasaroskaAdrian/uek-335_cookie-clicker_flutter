@@ -8,5 +8,6 @@
 /home/adi/Git/uek-335_cookie-clicker_flutter/src/build/linux/x64/debug/bundle/data/flutter_assets/shaders/ink_sparkle.frag
 /home/adi/Git/uek-335_cookie-clicker_flutter/src/build/linux/x64/debug/bundle/data/flutter_assets/AssetManifest.json
 /home/adi/Git/uek-335_cookie-clicker_flutter/src/build/linux/x64/debug/bundle/data/flutter_assets/kernel_blob.bin
+/home/adi/Git/uek-335_cookie-clicker_flutter/src/build/linux/x64/debug/bundle/data/flutter_assets/assets/icon/CookieLogo.png
 /home/adi/Git/uek-335_cookie-clicker_flutter/src/build/linux/x64/debug/bundle/data/flutter_assets/version.json
 /home/adi/Git/uek-335_cookie-clicker_flutter/src/build/linux/x64/debug/bundle/data/flutter_assets/fonts/MaterialIcons-Regular.otf

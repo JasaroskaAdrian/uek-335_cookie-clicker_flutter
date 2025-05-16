@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -7,121 +9,149 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "ChronoCookie",
+      title: 'ChronoCookie',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 117, 106, 203)),
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 117, 106, 203),
+        ),
       ),
-      home: const MyHomePage(title: 'ChronoCookie'),
+      home: const NavigationExample(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class NavigationExample extends StatefulWidget {
+  const NavigationExample({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<NavigationExample> createState() => _NavigationExampleState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _NavigationExampleState extends State<NavigationExample> {
+  int currentPageIndex = 0;
+  int _cookieCounter = 0;
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      _cookieCounter++;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
+    final theme = Theme.of(context);
+
+    final List<Widget> pages = <Widget>[
+      /// Home Page - Cookie Counter
+      Scaffold(
+        appBar: AppBar(
+          title: const Text('ChronoCookie'),
+          backgroundColor: theme.colorScheme.inversePrimary,
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              const Text('Cookie Counter:'),
+              Text(
+                '$_cookieCounter',
+                style: theme.textTheme.headlineMedium,
+              ),
+              ElevatedButton(
+                onPressed: _incrementCounter,
+                style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.all(0),
+                shape: const CircleBorder(),
+                backgroundColor: theme.colorScheme.primaryContainer,
+                ),
+                child: Image.asset(
+                  'assets/icon/CookieLogo.png',
+                  height: 300,
+                  width: 300,
+                ),
+              ),
+
+            ],
+          ),
+        ),
         
-          children: <Widget>[
-            const Text('Cookie Counter:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+      ),
+
+      /// Shop Upgrades Page (placeholder)
+      Scaffold(
+        appBar: AppBar(title: const Text('Shop Upgrades')),
+        body: const Center(child: Text('Upgrade your cookie machine here!')),
+      ),
+
+      /// Settings Page (placeholder)
+      Scaffold(
+        appBar: AppBar(title: const Text('Settings')),
+        body: const Center(child: Text('Configure your app settings here')),
+      ),
+
+      /// Stats Page (example stats layout)
+      Scaffold(
+        appBar: AppBar(title: const Text('Stats')),
+        body: const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Column(
+            children: <Widget>[
+              Card(
+                child: ListTile(
+                  leading: Icon(Icons.bar_chart),
+                  title: Text('Cookies Collected'),
+                  subtitle: Text('Track how many cookies you have collected'),
+                ),
+              ),
+              Card(
+                child: ListTile(
+                  leading: Icon(Icons.timer),
+                  title: Text('Time Played'),
+                  subtitle: Text('Track how long you’ve played'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Collect a Cookie',
-        child: const Icon(Icons.cookie_outlined),
-        backgroundColor: const Color.fromARGB(255, 125, 83, 241),
-        
-        
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    ];
+
+    return Scaffold(
+      body: pages[currentPageIndex],
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: currentPageIndex,
+        onDestinationSelected: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        indicatorColor: Colors.amber,
+        destinations: const <NavigationDestination>[
+          NavigationDestination(
+            icon: Icon(Icons.home_outlined),
+            selectedIcon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.store),
+            label: 'Shop Upgrades',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.account_circle_sharp),
+            label: 'Stats',
+          ),
+        ],
+      ),
     );
   }
 }

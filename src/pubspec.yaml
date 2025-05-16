@@ -1,5 +1,5 @@
 name: ChronoCookie
-description: My Cookie Clicker Clone
+description: A new Flutter project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -11,6 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  
+  flutter_launcher_icons: ^0.14.3
 
   english_words: ^4.0.0
   provider: ^6.1.2
@@ -23,3 +25,10 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/icon/CookieLogo.png
+
+
+flutter_launcher_icons:
+  ios: true
+  image_path: "../assets/icon/CookieLogo.png"
