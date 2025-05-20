@@ -15,11 +15,20 @@ class MyApp extends StatelessWidget {
       title: 'ChronoCookie',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 117, 106, 203),
-        ),
+    useMaterial3: true,
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: Color(0xFF8B5E3C), // warm cookie brown
+      brightness: Brightness.light,
       ),
+    ),
+    darkTheme: ThemeData(
+      useMaterial3: true,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: Color(0xFFD7B899), // lighter cookie brown for dark mode
+        brightness: Brightness.dark,
+      ),
+    ),
+    themeMode: ThemeMode.system,
       home: const NavigationExample(),
     );
   }
@@ -35,12 +44,20 @@ class NavigationExample extends StatefulWidget {
 class _NavigationExampleState extends State<NavigationExample> {
   int currentPageIndex = 0;
   int _cookieCounter = 0;
+  int _totalCookiesCollected = 0;
+  final stopwatch = Stopwatch();
 
   void _incrementCounter() {
+    if (!stopwatch.isRunning) {
+      stopwatch.start();  
+    }
+    double stopwatchMin = stopwatch.elapsedMilliseconds / 1000.0;
     setState(() {
       _cookieCounter++;
+      _totalCookiesCollected++;
     });
   }
+  double get stopwatchMin => stopwatch.elapsedMilliseconds / 1000.0;
 
   @override
   Widget build(BuildContext context) {
@@ -86,34 +103,54 @@ class _NavigationExampleState extends State<NavigationExample> {
       /// Shop Upgrades Page (placeholder)
       Scaffold(
         appBar: AppBar(title: const Text('Shop Upgrades')),
-        body: const Center(child: Text('Upgrade your cookie machine here!')),
+        body: Center(child: 
+        Card(
+          margin: EdgeInsets.all(8),
+          child: ListTile(
+            leading: Icon(Icons.upgrade),
+            title: Text('Upgrade Cookie Dough'),
+            subtitle: Text('Increases cookies/sec by 0.2'),
+            trailing: ElevatedButton(
+              onPressed: () {
+                // Buy logic
+                if (_cookieCounter >= 50) {
+                  _cookieCounter - 50;
+                  
+                };
+              },
+            child: Text('Buy for (50 🍪)'),
+    ),
+  ),
+)),
       ),
 
       /// Settings Page (placeholder)
       Scaffold(
         appBar: AppBar(title: const Text('Settings')),
-        body: const Center(child: Text('Configure your app settings here')),
+        body: const Center(
+          child: Text('Configure your app settings here')),
+          
       ),
 
       /// Stats Page (example stats layout)
       Scaffold(
-        appBar: AppBar(title: const Text('Stats')),
-        body: const Padding(
+        appBar: AppBar(title: Text('Stats')),
+        body: Padding(
           padding: EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
               Card(
                 child: ListTile(
                   leading: Icon(Icons.bar_chart),
-                  title: Text('Cookies Collected'),
-                  subtitle: Text('Track how many cookies you have collected'),
+                  title: Text('Cookies Collected: $_totalCookiesCollected'),
+                  subtitle: Text('Track how many cookies you have collected in total'),
                 ),
               ),
               Card(
                 child: ListTile(
                   leading: Icon(Icons.timer),
                   title: Text('Time Played'),
-                  subtitle: Text('Track how long you’ve played'),
+                  subtitle: Text('Track how long you’ve played: $stopwatchMin seconds'),
                 ),
               ),
             ],
