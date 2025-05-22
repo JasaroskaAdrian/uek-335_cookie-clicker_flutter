@@ -63,14 +63,14 @@ class _NavigationExampleState extends State<NavigationExample> {
   final stopwatch = Stopwatch();
   int cookieDoughLevel = 0;
   int cookieOvenLevel = 0;
-  int chocolateChips = 0;
-  int bakingGloves = 0;
-  int grandmasTouch = 0;
-  int grandsmasSecretRecipe = 0;
-  int sugarBoost = 0;
-  int magicWhisk = 0;
-  int autoMixer = 0;
-  int instaCookieMachine = 0;
+  int chocolateChipsLevel = 0;
+  int bakingGlovesLevel = 0;
+  int grandmasTouchLevel = 0;
+  int grandsmasSecretRecipeLevel = 0;
+  int sugarBoostLevel = 0;
+  int magicWhiskLevel = 0;
+  int autoMixerLevel = 0;
+  int instaCookieMachineLevel = 0;
 
   Timer _autoClickerTimer = Timer(Duration.zero, () {});
 
@@ -85,20 +85,32 @@ class _NavigationExampleState extends State<NavigationExample> {
   }
 
   void startAutoClicker() {
-    _autoClickerTimer.cancel();
+  _autoClickerTimer.cancel(); // Cancel existing timer if any
 
-    if (cookieDoughLevel > 0) {
-      double cookiesPerSecond = cookieDoughLevel * 0.5;
-      final durationLevel1 = Duration(milliseconds: (1000 / cookiesPerSecond).round());
+  double cookiesPerSecond =
+      (cookieDoughLevel * 0.5) +
+      (cookieOvenLevel * 1.5) +
+      (chocolateChipsLevel * 5) +
+      (bakingGlovesLevel * 10) +
+      (grandmasTouchLevel * 25) +
+      (grandsmasSecretRecipeLevel * 50) +
+      (sugarBoostLevel * 100) +
+      (magicWhiskLevel * 250) +
+      (autoMixerLevel * 750) +
+      (instaCookieMachineLevel * 2000);
 
-      _autoClickerTimer = Timer.periodic(durationLevel1, (timer) {
-        setState(() {
-          _cookieCounter++;
-          _totalCookiesCollected++;
-        });
+  if (cookiesPerSecond > 0) {
+    final duration = Duration(milliseconds: (1000 / cookiesPerSecond).round());
+
+    _autoClickerTimer = Timer.periodic(duration, (timer) {
+      setState(() {
+        _cookieCounter++;
+        _totalCookiesCollected++;
       });
-    }
+    });
   }
+}
+
 
   double get stopwatchSec => stopwatch.elapsedMilliseconds / 1000.0;
 
@@ -181,159 +193,159 @@ class _NavigationExampleState extends State<NavigationExample> {
                 });
               }
             },
+            child: Text('Buy for 150 🍪'),
+          ),
+        ),
+      ),
+      Card(
+        child: ListTile(
+          leading: Icon(Icons.icecream),
+          title: Text('Upgrade Chocolate Chips, Level: $chocolateChipsLevel'),
+          subtitle: Text('Each Level increases cookies/sec by 5'),
+          trailing: ElevatedButton(
+            onPressed: () {
+              if (_cookieCounter >= 450) {
+                setState(() {
+                  _cookieCounter -= 450;
+                  cookieOvenLevel++;
+                  startAutoClicker();
+                });
+              }
+            },
             child: Text('Buy for 450 🍪'),
           ),
         ),
       ),
       Card(
         child: ListTile(
-          leading: Icon(Icons.fireplace),
-          title: Text('Upgrade Cookie Oven, Level: $cookieOvenLevel'),
-          subtitle: Text('Each Level increases cookies/sec by 1.5'),
+          leading: Icon(Icons.back_hand),
+          title: Text('Upgrade Baking Gloves, Level: $bakingGlovesLevel'),
+          subtitle: Text('Each Level increases cookies/sec by 10'),
           trailing: ElevatedButton(
             onPressed: () {
-              if (_cookieCounter >= 150) {
+              if (_cookieCounter >= 1350) {
                 setState(() {
-                  _cookieCounter -= 150;
+                  _cookieCounter -= 1350;
                   cookieOvenLevel++;
                   startAutoClicker();
                 });
               }
             },
-            child: Text('Buy for 1350 🍪'),
+            child: Text("Buy for 1'350 🍪"),
           ),
         ),
       ),
       Card(
         child: ListTile(
-          leading: Icon(Icons.fireplace),
-          title: Text('Upgrade Cookie Oven, Level: $cookieOvenLevel'),
-          subtitle: Text('Each Level increases cookies/sec by 1.5'),
+          leading: Icon(Icons.elderly_woman),
+          title: Text('Upgrade Grandmas Touch, Level: $grandmasTouchLevel'),
+          subtitle: Text('Each Level increases cookies/sec by 25'),
           trailing: ElevatedButton(
             onPressed: () {
-              if (_cookieCounter >= 150) {
+              if (_cookieCounter >= 4050) {
                 setState(() {
-                  _cookieCounter -= 150;
+                  _cookieCounter -= 4050;
                   cookieOvenLevel++;
                   startAutoClicker();
                 });
               }
             },
-            child: Text('Buy for 4050 🍪'),
+            child: Text("Buy for 4'050 🍪"),
           ),
         ),
       ),
       Card(
         child: ListTile(
-          leading: Icon(Icons.fireplace),
-          title: Text('Upgrade Cookie Oven, Level: $cookieOvenLevel'),
-          subtitle: Text('Each Level increases cookies/sec by 1.5'),
+          leading: Icon(Icons.menu_book),
+          title: Text('Upgrade Grandmas Secret Recipe, Level: $grandsmasSecretRecipeLevel'),
+          subtitle: Text('Each Level increases cookies/sec by 50'),
           trailing: ElevatedButton(
             onPressed: () {
-              if (_cookieCounter >= 150) {
+              if (_cookieCounter >= 12150) {
                 setState(() {
-                  _cookieCounter -= 150;
+                  _cookieCounter -= 12150;
                   cookieOvenLevel++;
                   startAutoClicker();
                 });
               }
             },
-            child: Text('Buy for 12150 🍪'),
+            child: Text("Buy for 12'150 🍪"),
           ),
         ),
       ),
       Card(
         child: ListTile(
-          leading: Icon(Icons.fireplace),
-          title: Text('Upgrade Cookie Oven, Level: $cookieOvenLevel'),
-          subtitle: Text('Each Level increases cookies/sec by 1.5'),
+          leading: Icon(Icons.bolt),
+          title: Text('Upgrade Sugar Boost, Level: $sugarBoostLevel'),
+          subtitle: Text('Each Level increases cookies/sec by 100'),
           trailing: ElevatedButton(
             onPressed: () {
-              if (_cookieCounter >= 150) {
+              if (_cookieCounter >= 36450) {
                 setState(() {
-                  _cookieCounter -= 150;
+                  _cookieCounter -= 36450;
                   cookieOvenLevel++;
                   startAutoClicker();
                 });
               }
             },
-            child: Text('Buy for 36450 🍪'),
+            child: Text("Buy for 36'450 🍪"),
           ),
         ),
       ),
       Card(
         child: ListTile(
-          leading: Icon(Icons.fireplace),
-          title: Text('Upgrade Cookie Oven, Level: $cookieOvenLevel'),
-          subtitle: Text('Each Level increases cookies/sec by 1.5'),
+          leading: Icon(Icons.auto_fix_high),
+          title: Text('Upgrade Magic Whisk, Level: $magicWhiskLevel'),
+          subtitle: Text('Each Level increases cookies/sec by 250'),
           trailing: ElevatedButton(
             onPressed: () {
-              if (_cookieCounter >= 150) {
+              if (_cookieCounter >= 109350) {
                 setState(() {
-                  _cookieCounter -= 150;
+                  _cookieCounter -= 109350;
                   cookieOvenLevel++;
                   startAutoClicker();
                 });
               }
             },
-            child: Text('Buy for 109350 🍪'),
+            child: Text("Buy for 109'350 🍪"),
           ),
         ),
       ),
       Card(
         child: ListTile(
-          leading: Icon(Icons.fireplace),
-          title: Text('Upgrade Cookie Oven, Level: $cookieOvenLevel'),
-          subtitle: Text('Each Level increases cookies/sec by 1.5'),
+          leading: Icon(Icons.blender),
+          title: Text('Upgrade Auto Mixer, Level: $autoMixerLevel'),
+          subtitle: Text('Each Level increases cookies/sec by 750'),
           trailing: ElevatedButton(
             onPressed: () {
-              if (_cookieCounter >= 150) {
+              if (_cookieCounter >= 328050) {
                 setState(() {
-                  _cookieCounter -= 150;
+                  _cookieCounter -= 328050;
                   cookieOvenLevel++;
                   startAutoClicker();
                 });
               }
             },
-            child: Text('Buy for 328050 🍪'),
+            child: Text("Buy for 328'050 🍪"),
           ),
         ),
       ),
       Card(
         child: ListTile(
-          leading: Icon(Icons.fireplace),
-          title: Text('Upgrade Cookie Oven, Level: $cookieOvenLevel'),
-          subtitle: Text('Each Level increases cookies/sec by 1.5'),
+          leading: Icon(Icons.factory),
+          title: Text('Upgrade INSTA COOKIE MACHINERY, Level: $instaCookieMachineLevel'),
+          subtitle: Text('Each Level increases cookies/sec by 2000'),
           trailing: ElevatedButton(
             onPressed: () {
-              if (_cookieCounter >= 150) {
+              if (_cookieCounter >= 984150) {
                 setState(() {
-                  _cookieCounter -= 150;
+                  _cookieCounter -= 984150;
                   cookieOvenLevel++;
                   startAutoClicker();
                 });
               }
             },
-            child: Text('Buy for 984150 🍪'),
-          ),
-        ),
-      ),
-      Card(
-        child: ListTile(
-          leading: Icon(Icons.fireplace),
-          title: Text('Upgrade Cookie Oven, Level: $cookieOvenLevel'),
-          subtitle: Text('Each Level increases cookies/sec by 1.5'),
-          trailing: ElevatedButton(
-            onPressed: () {
-              if (_cookieCounter >= 150) {
-                setState(() {
-                  _cookieCounter -= 150;
-                  cookieOvenLevel++;
-                  startAutoClicker();
-                });
-              }
-            },
-            child: Text('Buy for 2952450 🍪'),
+            child: Text("Buy for 984'150 🍪"),
           ),
         ),
       ),
