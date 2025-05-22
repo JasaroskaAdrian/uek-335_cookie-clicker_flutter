@@ -207,7 +207,7 @@ class _NavigationExampleState extends State<NavigationExample> {
               if (_cookieCounter >= 450) {
                 setState(() {
                   _cookieCounter -= 450;
-                  cookieOvenLevel++;
+                  chocolateChipsLevel++;
                   startAutoClicker();
                 });
               }
@@ -226,7 +226,7 @@ class _NavigationExampleState extends State<NavigationExample> {
               if (_cookieCounter >= 1350) {
                 setState(() {
                   _cookieCounter -= 1350;
-                  cookieOvenLevel++;
+                  bakingGlovesLevel++;
                   startAutoClicker();
                 });
               }
@@ -245,7 +245,7 @@ class _NavigationExampleState extends State<NavigationExample> {
               if (_cookieCounter >= 4050) {
                 setState(() {
                   _cookieCounter -= 4050;
-                  cookieOvenLevel++;
+                  grandmasTouchLevel++;
                   startAutoClicker();
                 });
               }
@@ -264,7 +264,7 @@ class _NavigationExampleState extends State<NavigationExample> {
               if (_cookieCounter >= 12150) {
                 setState(() {
                   _cookieCounter -= 12150;
-                  cookieOvenLevel++;
+                  grandsmasSecretRecipeLevel++;
                   startAutoClicker();
                 });
               }
@@ -283,7 +283,7 @@ class _NavigationExampleState extends State<NavigationExample> {
               if (_cookieCounter >= 36450) {
                 setState(() {
                   _cookieCounter -= 36450;
-                  cookieOvenLevel++;
+                  sugarBoostLevel++;
                   startAutoClicker();
                 });
               }
@@ -302,7 +302,7 @@ class _NavigationExampleState extends State<NavigationExample> {
               if (_cookieCounter >= 109350) {
                 setState(() {
                   _cookieCounter -= 109350;
-                  cookieOvenLevel++;
+                  magicWhiskLevel++;
                   startAutoClicker();
                 });
               }
@@ -321,7 +321,7 @@ class _NavigationExampleState extends State<NavigationExample> {
               if (_cookieCounter >= 328050) {
                 setState(() {
                   _cookieCounter -= 328050;
-                  cookieOvenLevel++;
+                  autoMixerLevel++;
                   startAutoClicker();
                 });
               }
@@ -340,7 +340,7 @@ class _NavigationExampleState extends State<NavigationExample> {
               if (_cookieCounter >= 984150) {
                 setState(() {
                   _cookieCounter -= 984150;
-                  cookieOvenLevel++;
+                  instaCookieMachineLevel++;
                   startAutoClicker();
                 });
               }
