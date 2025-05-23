@@ -11,7 +11,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
+
+  shared_preferences: ^2.5.3
+
   flutter_launcher_icons: ^0.14.3
 
   english_words: ^4.0.0
@@ -31,4 +33,4 @@ flutter:
 
 flutter_launcher_icons:
   ios: true
-  image_path: "../assets/icon/CookieLogo.png"
+  image_path: "assets/icon/CookieLogo.png"
