@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
-
-
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp]);
   runApp(const MyApp());
 }
 
@@ -74,6 +76,89 @@ class _NavigationExampleState extends State<NavigationExample> {
   int instaCookieMachineLevel = 0;
 
   Timer _autoClickerTimer = Timer(Duration.zero, () {});
+  Timer _autoSaveTimer = Timer(Duration.zero, () {});
+
+  Future<void> saveGameData() async {
+  final prefs = await SharedPreferences.getInstance();
+  prefs.setInt('cookieCounter', _cookieCounter);
+  prefs.setInt('totalCookiesCollected', _totalCookiesCollected);
+  prefs.setInt('cookieDoughLevel', cookieDoughLevel);
+  prefs.setInt('cookieOvenLevel', cookieOvenLevel);
+  prefs.setInt('chocolateChipsLevel', chocolateChipsLevel);
+  prefs.setInt('bakingGlovesLevel', bakingGlovesLevel);
+  prefs.setInt('grandmasTouchLevel', grandmasTouchLevel);
+  prefs.setInt('grandsmasSecretRecipeLevel', grandsmasSecretRecipeLevel);
+  prefs.setInt('sugarBoostLevel', sugarBoostLevel);
+  prefs.setInt('magicWhiskLevel', magicWhiskLevel);
+  prefs.setInt('autoMixerLevel', autoMixerLevel);
+  prefs.setInt('instaCookieMachineLevel', instaCookieMachineLevel);
+}
+
+Future<void> loadGameData() async {
+  final prefs = await SharedPreferences.getInstance();
+  setState(() {
+    _cookieCounter = prefs.getInt('cookieCounter') ?? 0;
+    _totalCookiesCollected = prefs.getInt('totalCookiesCollected') ?? 0;
+    cookieDoughLevel = prefs.getInt('cookieDoughLevel') ?? 0;
+    cookieOvenLevel = prefs.getInt('cookieOvenLevel') ?? 0;
+    chocolateChipsLevel = prefs.getInt('chocolateChipsLevel') ?? 0;
+    bakingGlovesLevel = prefs.getInt('bakingGlovesLevel') ?? 0;
+    grandmasTouchLevel = prefs.getInt('grandmasTouchLevel') ?? 0;
+    grandsmasSecretRecipeLevel = prefs.getInt('grandsmasSecretRecipeLevel') ?? 0;
+    sugarBoostLevel = prefs.getInt('sugarBoostLevel') ?? 0;
+    magicWhiskLevel = prefs.getInt('magicWhiskLevel') ?? 0;
+    autoMixerLevel = prefs.getInt('autoMixerLevel') ?? 0;
+    instaCookieMachineLevel = prefs.getInt('instaCookieMachineLevel') ?? 0;
+  });
+  startAutoClicker(); // Start the auto clicker that adds souls every second
+}
+Future<void> purgeData() async {
+  final prefs = await SharedPreferences.getInstance();
+
+  // Remove all relevant saved keys
+  await prefs.remove('cookieCounter');
+  await prefs.remove('totalCookiesCollected');
+  await prefs.remove('cookieDoughLevel');
+  await prefs.remove('cookieOvenLevel');
+  await prefs.remove('chocolateChipsLevel');
+  await prefs.remove('bakingGlovesLevel');
+  await prefs.remove('grandmasTouchLevel');
+  await prefs.remove('grandsmasSecretRecipeLevel');
+  await prefs.remove('sugarBoostLevel');
+  await prefs.remove('magicWhiskLevel');
+  await prefs.remove('autoMixerLevel');
+  await prefs.remove('instaCookieMachineLevel');
+
+  // Reset your in-memory variables and update UI
+  setState(() {
+    _cookieCounter = 0;
+    _totalCookiesCollected = 0;
+    cookieDoughLevel = 0;
+    cookieOvenLevel = 0;
+    chocolateChipsLevel = 0;
+    bakingGlovesLevel = 0;
+    grandmasTouchLevel = 0;
+    grandsmasSecretRecipeLevel = 0;
+    sugarBoostLevel = 0;
+    magicWhiskLevel = 0;
+    autoMixerLevel = 0;
+    instaCookieMachineLevel = 0;
+    _autoClickerTimer.cancel();
+  });
+}
+
+
+@override
+void initState() {
+  super.initState();
+  loadGameData(); // Load saved game data when the app starts
+
+  // Start auto-saving every 5 seconds
+  _autoSaveTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+    saveGameData();
+  });
+}
+
 
   void _incrementCounter() {
     if (!stopwatch.isRunning) {
@@ -166,15 +251,13 @@ class _NavigationExampleState extends State<NavigationExample> {
           title: Text('Upgrade Cookie Dough, Level: $cookieDoughLevel'),
           subtitle: Text('Each Level increases cookies/sec by 0.5'),
           trailing: ElevatedButton(
-            onPressed: () {
-              if (_cookieCounter >= 50) {
+            onPressed: _cookieCounter >= 50 ? () {
                 setState(() {
                   _cookieCounter -= 50;
                   cookieDoughLevel++;
                   startAutoClicker();
                 });
-              }
-            },
+              }: null,
             child: Text('Buy for 50 🍪'),
           ),
         ),
@@ -185,15 +268,14 @@ class _NavigationExampleState extends State<NavigationExample> {
           title: Text('Upgrade Cookie Oven, Level: $cookieOvenLevel'),
           subtitle: Text('Each Level increases cookies/sec by 1.5'),
           trailing: ElevatedButton(
-            onPressed: () {
-              if (_cookieCounter >= 150) {
+            onPressed: _cookieCounter >= 150 ? () {
+              
                 setState(() {
                   _cookieCounter -= 150;
                   cookieOvenLevel++;
                   startAutoClicker();
                 });
-              }
-            },
+              }: null,
             child: Text('Buy for 150 🍪'),
           ),
         ),
@@ -204,15 +286,14 @@ class _NavigationExampleState extends State<NavigationExample> {
           title: Text('Upgrade Chocolate Chips, Level: $chocolateChipsLevel'),
           subtitle: Text('Each Level increases cookies/sec by 5'),
           trailing: ElevatedButton(
-            onPressed: () {
-              if (_cookieCounter >= 450) {
+            onPressed: _cookieCounter >= 450 ? () {
+              
                 setState(() {
                   _cookieCounter -= 450;
                   chocolateChipsLevel++;
                   startAutoClicker();
                 });
-              }
-            },
+              }: null,
             child: Text('Buy for 450 🍪'),
           ),
         ),
@@ -223,15 +304,14 @@ class _NavigationExampleState extends State<NavigationExample> {
           title: Text('Upgrade Baking Gloves, Level: $bakingGlovesLevel'),
           subtitle: Text('Each Level increases cookies/sec by 10'),
           trailing: ElevatedButton(
-            onPressed: () {
-              if (_cookieCounter >= 1350) {
+            onPressed: _cookieCounter >= 1350 ? () {
+              
                 setState(() {
                   _cookieCounter -= 1350;
                   bakingGlovesLevel++;
                   startAutoClicker();
                 });
-              }
-            },
+              }: null,
             child: Text("Buy for 1'350 🍪"),
           ),
         ),
@@ -242,15 +322,13 @@ class _NavigationExampleState extends State<NavigationExample> {
           title: Text('Upgrade Grandmas Touch, Level: $grandmasTouchLevel'),
           subtitle: Text('Each Level increases cookies/sec by 25'),
           trailing: ElevatedButton(
-            onPressed: () {
-              if (_cookieCounter >= 4050) {
+            onPressed: _cookieCounter >= 4050 ? () {
                 setState(() {
                   _cookieCounter -= 4050;
                   grandmasTouchLevel++;
                   startAutoClicker();
                 });
-              }
-            },
+              }: null,
             child: Text("Buy for 4'050 🍪"),
           ),
         ),
@@ -261,15 +339,14 @@ class _NavigationExampleState extends State<NavigationExample> {
           title: Text('Upgrade Grandmas Secret Recipe, Level: $grandsmasSecretRecipeLevel'),
           subtitle: Text('Each Level increases cookies/sec by 50'),
           trailing: ElevatedButton(
-            onPressed: () {
-              if (_cookieCounter >= 12150) {
+            onPressed: _cookieCounter >= 12150 ? () {
+              
                 setState(() {
                   _cookieCounter -= 12150;
                   grandsmasSecretRecipeLevel++;
                   startAutoClicker();
                 });
-              }
-            },
+              }: null,
             child: Text("Buy for 12'150 🍪"),
           ),
         ),
@@ -280,15 +357,13 @@ class _NavigationExampleState extends State<NavigationExample> {
           title: Text('Upgrade Sugar Boost, Level: $sugarBoostLevel'),
           subtitle: Text('Each Level increases cookies/sec by 100'),
           trailing: ElevatedButton(
-            onPressed: () {
-              if (_cookieCounter >= 36450) {
+            onPressed: _cookieCounter >= 36450 ? () {
                 setState(() {
                   _cookieCounter -= 36450;
                   sugarBoostLevel++;
                   startAutoClicker();
                 });
-              }
-            },
+              }: null,
             child: Text("Buy for 36'450 🍪"),
           ),
         ),
@@ -299,15 +374,13 @@ class _NavigationExampleState extends State<NavigationExample> {
           title: Text('Upgrade Magic Whisk, Level: $magicWhiskLevel'),
           subtitle: Text('Each Level increases cookies/sec by 250'),
           trailing: ElevatedButton(
-            onPressed: () {
-              if (_cookieCounter >= 109350) {
+            onPressed: _cookieCounter >= 109350 ? () {
                 setState(() {
                   _cookieCounter -= 109350;
                   magicWhiskLevel++;
                   startAutoClicker();
                 });
-              }
-            },
+              }: null,
             child: Text("Buy for 109'350 🍪"),
           ),
         ),
@@ -318,15 +391,14 @@ class _NavigationExampleState extends State<NavigationExample> {
           title: Text('Upgrade Auto Mixer, Level: $autoMixerLevel'),
           subtitle: Text('Each Level increases cookies/sec by 750'),
           trailing: ElevatedButton(
-            onPressed: () {
-              if (_cookieCounter >= 328050) {
+            onPressed: _cookieCounter >= 328050 ? () {
+             
                 setState(() {
                   _cookieCounter -= 328050;
                   autoMixerLevel++;
                   startAutoClicker();
                 });
-              }
-            },
+              }: null,
             child: Text("Buy for 328'050 🍪"),
           ),
         ),
@@ -337,16 +409,28 @@ class _NavigationExampleState extends State<NavigationExample> {
           title: Text('Upgrade INSTA COOKIE MACHINERY, Level: $instaCookieMachineLevel'),
           subtitle: Text('Each Level increases cookies/sec by 2000'),
           trailing: ElevatedButton(
-            onPressed: () {
-              if (_cookieCounter >= 984150) {
+            onPressed: _cookieCounter >= 984150 ? () {
                 setState(() {
                   _cookieCounter -= 984150;
                   instaCookieMachineLevel++;
                   startAutoClicker();
+                  
                 });
-              }
-            },
+              }: null,
             child: Text("Buy for 984'150 🍪"),
+          ),
+        ),
+      ),
+      Card(
+        child: ListTile(
+          leading: Icon(Icons.delete),
+          title: Text('PURGE THE COOKIES'),
+          subtitle: Text('Reset your whole Game by purging your saved Data'),
+          trailing: ElevatedButton(
+            onPressed: () {
+              purgeData();
+            },
+            child: Text(" DELETE "),
           ),
         ),
       ),
@@ -406,24 +490,28 @@ class _NavigationExampleState extends State<NavigationExample> {
         indicatorColor: Colors.amber,
         destinations: const <NavigationDestination>[
           NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
+            icon: Icon(Icons.home),
+            selectedIcon: Icon(Icons.home_outlined),
             label: 'Home',
           ),
           NavigationDestination(
             icon: Icon(Icons.store),
+            selectedIcon: Icon(Icons.store_outlined),
             label: 'Shop Upgrades',
           ),
           NavigationDestination(
             icon: Icon(Icons.settings),
+            selectedIcon: Icon(Icons.settings_outlined),
             label: 'Settings',
           ),
           NavigationDestination(
             icon: Icon(Icons.account_circle_sharp),
+            selectedIcon: Icon(Icons.account_circle_outlined),
             label: 'Stats',
           ),
         ],
       ),
     );
+    
   }
 }
